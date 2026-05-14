@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Практикум</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+    <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script defer src="assets/js/app.js"></script>
+  </head>
+  <body class="home-view">
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" id="homeLink" href="./" aria-label="На главную страницу Python Практикум">
+          <span class="logo-mark" aria-hidden="true">
+            <span class="logo-py">Py</span>
+            <span class="logo-caret">▶</span>
+          </span>
+          <span class="logo-copy">
+            <span class="logo-title">Python Практикум</span>
+            <span class="logo-subtitle">обучение с нуля</span>
+          </span>
+        </a>
+
+        <div class="header-progress" aria-label="Прогресс обучения">
+          <span>Прогресс</span>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <strong id="progressText">0%</strong>
+        </div>
+
+        <div class="auth-area" id="authArea">
+          <div class="auth-actions" id="authActions">
+            <button class="auth-button" id="openLogin" type="button">Войти</button>
+            <button class="auth-primary" id="openRegister" type="button">Регистрация</button>
+          </div>
+          <div class="user-panel" id="userPanel" hidden>
+            <span id="userNameLabel"></span>
+            <button class="auth-button" id="logoutButton" type="button">Выйти</button>
+          </div>
+        </div>
+
+        <button class="menu-toggle" id="toggleLessons" type="button" aria-expanded="false" aria-controls="lessonNav">
+          <i data-lucide="list"></i>
+          <span>Темы</span>
+        </button>
+      </header>
+
+      <main class="home-page" id="homePage">
+        <section class="home-hero">
+          <div class="home-copy">
+            <p class="eyebrow">Интерактивный веб-учебник</p>
+            <h1>Изучайте Python с нуля и сразу проверяйте код</h1>
+            <p>
+              Последовательный курс для начинающих: короткая теория, примеры,
+              самостоятельные задания и запуск Python прямо в браузере.
+            </p>
+            <div class="home-actions">
+              <button class="primary-button" id="startCourse" type="button">
+                <i data-lucide="play"></i>
+                <span>Начать курс</span>
+              </button>
+              <button class="ghost-button" id="continueCourse" type="button">
+                <i data-lucide="book-open"></i>
+                <span>Продолжить</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="home-visual" aria-label="Пример работы с Python">
+            <div class="visual-toolbar">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <pre><code>name = "Python"
+lessons = 14
+
+print(f"Курс: {name}")
+print("Уроков:", lessons)</code></pre>
+            <div class="visual-output">
+              <span>Курс: Python</span>
+              <span>Уроков: 14</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="home-overview" aria-label="Описание курса">
+          <div class="overview-item">
+            <i data-lucide="route"></i>
+            <strong>14 уроков по порядку</strong>
+            <span>От первой команды до функций, списков и циклов.</span>
+          </div>
+          <div class="overview-item">
+            <i data-lucide="square-terminal"></i>
+            <strong>Практика в браузере</strong>
+            <span>Редактор, запуск кода, консоль и сообщения об ошибках.</span>
+          </div>
+          <div class="overview-item">
+            <i data-lucide="smartphone"></i>
+            <strong>Удобно на телефоне</strong>
+            <span>Адаптивная навигация и компактная рабочая область.</span>
+          </div>
+        </section>
+
+        <section class="home-progress-panel" aria-label="Текущий прогресс">
+          <button
+            class="home-topics-toggle"
+            id="toggleHomeTopics"
+            type="button"
+            aria-expanded="false"
+            aria-controls="homeTopicList"
+            title="Показать темы курса"
+          >
+            <i data-lucide="chevron-down"></i>
+          </button>
+          <div>
+            <p class="eyebrow">Ваш прогресс</p>
+            <h2 id="homeProgressTitle">0 из 14 уроков завершено</h2>
+          </div>
+          <div class="home-progress-line">
+            <div class="progress-track" aria-hidden="true">
+              <div class="progress-fill" id="homeProgressFill"></div>
+            </div>
+            <strong id="homeProgressText">0%</strong>
+          </div>
+          <div class="home-topic-list" id="homeTopicList" hidden></div>
+        </section>
+      </main>
+
+      <div class="course-layout" id="courseView">
+        <aside class="course-sidebar" id="courseSidebar" aria-label="Навигация по курсу">
+          <nav class="lesson-nav" id="lessonNav"></nav>
+        </aside>
+
+        <main class="lesson-workspace">
+          <section class="lesson-header">
+            <div>
+              <p class="eyebrow" id="moduleLabel">Раздел 1</p>
+              <h2 id="lessonTitle">Загрузка урока</h2>
+              <p class="lesson-subtitle" id="lessonSubtitle"></p>
+            </div>
+          </section>
+
+          <section class="learning-grid">
+            <article class="lesson-card" aria-labelledby="lessonTitle">
+              <div class="section-title">
+                <i data-lucide="book-open"></i>
+                <span>Материал урока</span>
+              </div>
+
+              <div class="goal-list" id="goalList"></div>
+              <div id="lessonContent" class="lesson-content"></div>
+
+              <div class="example-block">
+                <div class="section-title">
+                  <i data-lucide="code-2"></i>
+                  <span>Пример</span>
+                </div>
+                <pre class="example-code" id="exampleCode"></pre>
+              </div>
+
+              <div class="task-block">
+                <div class="section-title">
+                  <i data-lucide="list-checks"></i>
+                  <span>Самостоятельное задание</span>
+                </div>
+                <p id="taskText"></p>
+              </div>
+            </article>
+
+            <section class="practice-card" aria-label="Редактор Python-кода">
+              <div class="practice-header">
+                <div>
+                  <p class="eyebrow">Практика</p>
+                  <h3>Напишите решение</h3>
+                </div>
+              </div>
+
+              <div class="editor-toolbar">
+                <button class="primary-button" id="runCode" type="button">
+                  <i data-lucide="play"></i>
+                  <span>Запустить</span>
+                </button>
+                <button class="ghost-button" id="resetCode" type="button" title="Очистить код урока">
+                  <i data-lucide="trash-2"></i>
+                  <span>Очистить код</span>
+                </button>
+                <button class="ghost-button" id="clearOutput" type="button" title="Очистить консоль">
+                  <i data-lucide="eraser"></i>
+                  <span>Очистить консоль</span>
+                </button>
+              </div>
+
+              <div class="editor-wrap">
+                <pre class="line-numbers" id="lineNumbers" aria-hidden="true">1</pre>
+                <textarea id="codeEditor" spellcheck="false" wrap="off" aria-label="Поле ввода Python-кода"></textarea>
+              </div>
+
+              <div class="console-header">
+                <div class="section-title">
+                  <i data-lucide="terminal"></i>
+                  <span>Консоль</span>
+                </div>
+                <span id="runStatus">Готово к запуску</span>
+              </div>
+              <pre class="output" id="output" aria-live="polite"></pre>
+
+              <div class="feedback" id="feedback">
+                <i data-lucide="info"></i>
+                <span>Введите решение и запустите код, чтобы получить обратную связь.</span>
+              </div>
+            </section>
+          </section>
+        </main>
+      </div>
+
+      <div class="auth-overlay" id="authOverlay" hidden>
+        <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+          <button class="auth-close" id="closeAuth" type="button" aria-label="Закрыть форму">
+            <i data-lucide="x"></i>
+          </button>
+
+          <div class="auth-modal-header">
+            <p class="eyebrow">Доступ к урокам</p>
+            <h2 id="authTitle">Создайте аккаунт</h2>
+            <p id="authIntro">Зарегистрируйтесь или войдите, чтобы открыть учебные материалы.</p>
+          </div>
+
+          <div class="auth-tabs" role="tablist" aria-label="Авторизация">
+            <button class="is-active" id="showRegister" type="button">Регистрация</button>
+            <button id="showLogin" type="button">Вход</button>
+          </div>
+
+          <form class="auth-form" id="registerForm">
+            <label>
+              <span>Имя</span>
+              <input id="registerName" type="text" autocomplete="name" minlength="2" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input id="registerEmail" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              <span>Пароль</span>
+              <input id="registerPassword" type="password" autocomplete="new-password" minlength="4" required />
+            </label>
+            <label>
+              <span>Повтор пароля</span>
+              <input id="registerPasswordConfirm" type="password" autocomplete="new-password" minlength="4" required />
+            </label>
+            <p class="field-message" id="passwordMatchMessage" aria-live="polite"></p>
+            <button class="primary-button" type="submit">
+              <i data-lucide="user-plus"></i>
+              <span>Зарегистрироваться</span>
+            </button>
+          </form>
+
+          <form class="auth-form" id="loginForm" hidden>
+            <label>
+              <span>Email</span>
+              <input id="loginEmail" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              <span>Пароль</span>
+              <input id="loginPassword" type="password" autocomplete="current-password" required />
+            </label>
+            <button class="primary-button" type="submit">
+              <i data-lucide="log-in"></i>
+              <span>Войти</span>
+            </button>
+          </form>
+
+          <p class="auth-message" id="authMessage"></p>
+          <p class="auth-note">Аккаунт сохраняется только в этом браузере.</p>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
